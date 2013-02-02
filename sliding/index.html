@@ -25,6 +25,7 @@
 			bottom: 0;
 			width: 100%;
 			color: #eee;
+			background: #600;
 		}
 
 		.slide {
@@ -37,16 +38,7 @@
 			-webkit-transition: all 0.25s ease-in-out; /* Safari and Chrome */
 			-o-transition: all 0.25s ease-in-out;/* Opera */
 
-			background: #600;
 			-webkit-font-smoothing: subpixel-antialiased;
-		}
-
-		.slide-left {
-			-webkit-transform: translateX(-100%);
-		}
-
-		.slide-right {
-			-webkit-transform: translateX(100%);
 		}
 	</style>
 </head>
@@ -56,30 +48,54 @@
 	</div>
 
 	<div class="layout-content">
-		<div class="slide slide-center">
+		<div class="slide">
 			<h1>This is some content.</h1>
-			<p>
+			<p style="padding: 10px; border: 1px solid black;">
 				Vestibulum consequat elementum erat, eu tristique magna semper eu. Aliquam fringilla blandit commodo. Sed malesuada molestie purus, quis luctus neque ultrices et. Aenean aliquam metus ut diam ultrices et consectetur mi ullamcorper. In pulvinar vestibulum felis, ut imperdiet justo pretium eget. Nulla ut posuere leo. Donec porta augue eu lorem condimentum at elementum magna rutrum.
 			</p>
 			<button id="drillIn" type="button">Drill In</button>
-		</div>
-		<div class="slide slide-right">
-			<h1>This is some more content.</h1>
-			<p>
-				Cras augue dolor, fermentum laoreet facilisis vitae, venenatis sed tellus. Vivamus aliquam congue tincidunt. Duis dui risus, auctor quis venenatis et, lobortis eu nulla. Vivamus nec arcu odio, at fringilla nibh. Integer vel tortor erat, vitae varius est. Sed et metus consequat nunc cursus mattis vitae quis est. Duis sodales lectus cursus enim tempor porta vitae eu diam. Mauris vitae metus eu diam auctor egestas sit amet in nisl. Nullam ligula nibh, scelerisque at viverra et, luctus ac lectus. Sed felis purus, tempor at tempor elementum, tincidunt et nisl. Suspendisse turpis felis, tristique vel tempus sed, feugiat mollis tortor.
-			</p>
-			<p>
-				Mauris purus mauris, fermentum vel blandit ut, fringilla ornare elit. Nunc erat mauris, congue at rutrum non, consequat a odio. Proin neque magna, scelerisque vel dignissim a, semper nec ligula. Donec felis mauris, aliquam et placerat vel, suscipit et dolor. Curabitur vel faucibus ante. Nam viverra venenatis nunc eget rutrum. Praesent non adipiscing lorem. Nullam nec libero lorem, hendrerit mollis diam. Fusce suscipit dapibus mollis. Nunc scelerisque suscipit risus, ut volutpat odio malesuada nec. Curabitur ac porta felis. Sed leo augue, tristique et placerat eu, porttitor in massa. Fusce convallis, ligula vitae gravida aliquet, sem eros semper erat, placerat ultricies odio mauris vitae orci.
-			</p>
 		</div>
 	</div>
 
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
 	<script type="text/javascript">
 		$(function(){
+			var container = $('.layout-content');
+
+			var replaceFrom = function(content, initialX){
+				var currentSlide = container.find('.slide'),
+					newSlide = $('<div class="slide" />').append(content);
+
+				// append the new content off screen to the right
+				newSlide.css('transform', 'translateX('+ -initialX + '%)');
+				container.append(newSlide);
+
+				// perform the slide
+				setTimeout(function(){
+					// remove the current slide when it's off screen
+					currentSlide.on('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function(){
+						currentSlide.remove();
+					});
+
+					// move both slides to the left
+					currentSlide.css('transform', 'translateX(' + initialX + '%)');
+					newSlide.css('transform', '');
+				}, 0)
+			}
+
+			var replaceFromLeft = function(content){
+				replaceFrom(content, 100);
+			};
+
+
+			var replaceFromRight = function(content){
+				replaceFrom(content, -100);
+			};
+
+			
 			$('#drillIn').on('click', function(){
-				$('.slide.slide-center').removeClass('slide-center').addClass('slide-left');
-				$('.slide.slide-right').removeClass('slide-right').addClass('slide-center');
+				replaceFromRight($('<p> New Content!</p>'));
+
 			});
 		});
 	</script>
