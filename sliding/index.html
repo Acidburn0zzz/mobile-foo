@@ -1,8 +1,76 @@
 <html>
 <head>
 	<title>Transistion Test</title>
+
+	<style type="text/css">
+		body {
+			margin: 0;
+		}
+
+		.layout-header {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+
+			height: 3em;
+
+			background: #006;
+			color: #eee;
+		}
+
+		.layout-content {
+			position: absolute;
+			top: 3em;
+			bottom: 0;
+			width: 100%;
+			background: #600;
+			color: #eee;
+		}
+
+		.slide {
+			position: absolute;
+			width: 100%;
+			min-height: 100%;
+
+			transition: all 0.25s ease-in-out;
+			-moz-transition: all 0.25s ease-in-out; /* Firefox 4 */
+			-webkit-transition: all 0.25s ease-in-out; /* Safari and Chrome */
+			-o-transition: all 0.25s ease-in-out;/* Opera */
+		}
+
+		.slide-left {
+			-webkit-transform: translateX(-100%);
+		}
+
+		.slide-right {
+			-webkit-transform: translateX(100%);
+		}
+	</style>
 </head>
 <body>
+	<div class="layout-header">
+		This is the header
+	</div>
 
+	<div class="layout-content">
+		<div class="slide slide-center">
+			<p>This is some content.</p>
+			<button id="drillIn" type="button">Drill In</button>
+		</div>
+		<div class="slide slide-right">
+			<p>This is some right content.</p>
+		</div>
+	</div>
+
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$('#drillIn').on('click', function(){
+				$('.slide.slide-center').removeClass('slide-center').addClass('slide-left');
+				$('.slide.slide-right').removeClass('slide-right').addClass('slide-center');
+			});
+		});
+	</script>
 </body>
 </html>
