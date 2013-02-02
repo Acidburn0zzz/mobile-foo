@@ -59,44 +59,62 @@
 
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
 	<script type="text/javascript">
-		$(function(){
-			var container = $('.layout-content');
+		var Mobile = {};
 
-			var replaceFrom = function(content, initialX){
-				var currentSlide = container.find('.slide'),
-					newSlide = $('<div class="slide" />').append(content);
+		Mobile.ViewContainer = function(selector){
+			var that = this,
+			container = $(selector);
 
-				// append the new content off screen to the right
-				newSlide.css('transform', 'translateX('+ -initialX + '%)');
-				container.append(newSlide);
+			this.ReplaceView = function(newContent){
+				var newView = $('<div class="slide" />').append(newContent);
+				container.empty().append(newView);
+			};
 
-				// perform the slide
+			this.ReplaceViewFrom = function(newContent, initialX){
+				var currentView = container.find('.slide'),
+					newView = $('<div class="slide" />').append(newContent)
+					.css('transform', 'translateX('+ -initialX + '%)');
+
+				// add the new view
+				container.append(newView);
+
+				// perfrom slide transition
 				setTimeout(function(){
-					// remove the current slide when it's off screen
-					currentSlide.on('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function(){
-						currentSlide.remove();
+					// when the current view is off sceen, remove it
+					currentView.on('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function(){
+						currentView.remove();
 					});
 
-					// move both slides to the left
-					currentSlide.css('transform', 'translateX(' + initialX + '%)');
-					newSlide.css('transform', '');
-				}, 0)
-			}
-
-			var replaceFromLeft = function(content){
-				replaceFrom(content, 100);
+					// start the sliding
+					currentView.css('transform', 'translateX(' + initialX + '%)');
+					newView.css('transform', '');
+				}, 0);
 			};
 
+			return {
+				replaceView: function(content) {
+					that.ReplaceView(content);
+				},
 
-			var replaceFromRight = function(content){
-				replaceFrom(content, -100);
+				replaceViewFromRight: function(content){
+					that.ReplaceViewFrom(content, -100);
+				},
+
+				replaceViewFromLeft: function(content){
+					that.ReplaceViewFrom(content, 100);
+				}
 			};
+		};
 
-			
-			$('#drillIn').on('click', function(){
-				replaceFromRight($('<p> New Content!</p>'));
+		$(function(){
+			var viewContainer = new Mobile.ViewContainer('.layout-content');
 
+			var baseContent = $('<p> Base Content!</p>');
+			baseContent.on('click', function(){
+				viewContainer.replaceViewFromRight($('<p> New Content!</p>'));
 			});
+
+			viewContainer.replaceView(baseContent);
 		});
 	</script>
 </body>
