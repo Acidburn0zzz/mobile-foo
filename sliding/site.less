@@ -1,0 +1,77 @@
+@base-color: #006;
+
+body {
+	margin: 0;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.header-bar {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+
+	height: 3em;
+	line-height: 3em;
+	text-align: center;
+
+	-webkit-box-shadow: rgba(0, 0, 0, 0.0976563) 0px 1px 10px 0px;
+	background-color: rgb(27, 27, 27);
+	background-image: -webkit-linear-gradient(top, rgb(50, 50, 50), rgb(20, 20, 20));
+	border: 1px solid rgb(60, 60, 60);
+	box-shadow: rgba(0, 0, 0, 0.0976563) 0px 1px 10px 0px;
+	color: #eee;
+}
+
+.header-bar-title {
+	font-size: 1.5em;
+}
+
+.header-button {
+	position: absolute;
+	height: 2em;
+	padding: 0 10px;
+	border-radius: 4px;
+	line-height: 1.5em;
+	-webkit-box-align: center;
+	-webkit-box-shadow: rgba(255, 255, 255, 0.0976563) 0px 1px 0px 0px inset, rgba(255, 255, 255, 0.0742188) 0px 1px 0px 0px;
+	background-color: rgb(14, 14, 14);
+	background-image: -webkit-linear-gradient(top, rgb(30,30,30), rgb(4, 4, 4));
+	border: 1px solid rgba(0, 0, 0, 0.246094);
+	border-bottom: 1px solid rgba(0, 0, 0, 0.0976563);
+	box-shadow: rgba(255, 255, 255, 0.0976563) 0px 1px 0px 0px inset, rgba(255, 255, 255, 0.0742188) 0px 1px 0px 0px;
+	box-sizing: border-box;
+	color: rgb(255, 255, 255);
+	text-align: center;
+	text-shadow: rgba(0, 0, 0, 0.246094) 0px -1px 0px;
+
+}
+
+.header-button-right {
+	right: .25em;
+	top: .5em;
+	color: #fff;
+}
+
+.view-container {
+	position: absolute;
+	top: 3em;
+	bottom: 0;
+	width: 100%;
+	overflow-y: scroll;
+
+	background: url('http://subtlepatterns.subtlepatterns.netdna-cdn.com/patterns/debut_light.png');
+}
+
+.view {
+	position: absolute;
+	width: 100%;
+	min-height: 100%;
+
+	transition: all 0.25s ease-in-out;
+	-moz-transition: all 0.25s ease-in-out; /* Firefox 4 */
+	-webkit-transition: all 0.25s ease-in-out; /* Safari and Chrome */
+	-o-transition: all 0.25s ease-in-out; /* Opera */
+
+	-webkit-font-smoothing: subpixel-antialiased;
+}
